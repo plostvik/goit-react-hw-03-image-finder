@@ -21,15 +21,6 @@ export default class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.page > 2) {
-      window.scrollTo({
-        top:
-          document.documentElement.scrollTop +
-          document.documentElement.clientHeight -
-          180,
-        behavior: 'smooth',
-      });
-    }
     const prevQuery = prevState.query;
     const nextQuery = this.state.query;
 
@@ -51,6 +42,15 @@ export default class App extends Component {
             page: prevState.page + 1,
             totalPages: Math.round(fetchedData.totalHits / 12),
           }));
+          if (this.state.page > 2) {
+            window.scrollTo({
+              top:
+                document.documentElement.scrollTop +
+                document.documentElement.clientHeight -
+                180,
+              behavior: 'smooth',
+            });
+          }
         } else this.setState({ moreItems: false });
       })
       .catch(error => this.setState({ error }))
